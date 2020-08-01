@@ -3,8 +3,16 @@
 ---
 apache:
   manage_service_states: true
+  server: apache2
+  service: apache2
   service_state: running
   service_enable: true
+  user: http
+  group: http
+  rootuser: root
+
+  configfile: /etc/apache2/httpd.conf
+  portsfile: /etc/apache2/ports.conf
 
   mod_security:
     crs_install: false

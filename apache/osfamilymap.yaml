@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
+{%- if grains.os == 'MacOS' %}
+    {%- set macos_rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
+{%- endif %}
 ---
 Debian:
-  server: apache2
-  service: apache2
   user: www-data
   group: www-data
   configfile: /etc/apache2/apache2.conf
-  portsfile: /etc/apache2/ports.conf
 
   mod_wsgi: libapache2-mod-wsgi
   mod_php5: libapache2-mod-php5
@@ -60,10 +60,8 @@ RedHat:
 
 Gentoo:
   server: www-servers/apache
-  service: apache2
   user: apache
   group: apache
-  configfile: /etc/apache2/httpd.conf
 
   mod_wsgi: www-apache/mod_wsgi
   mod_fcgid: www-apache/mod_fcgid
@@ -78,11 +76,8 @@ Gentoo:
   wwwdir: /var/www
 
 Suse:
-  server: apache2
-  service: apache2
   user: wwwrun
   group: wwwrun
-  configfile: /etc/apache2/httpd.conf
 
   mod_wsgi: apache2-mod_wsgi
   mod_php5: apache2-mod_php5
@@ -122,8 +117,6 @@ FreeBSD:
 Arch:
   server: apache
   service: httpd
-  user: http
-  group: http
   configfile: /etc/httpd/conf/httpd.conf
 
   mod_wsgi: mod_wsgi
@@ -136,3 +129,6 @@ Arch:
   wwwdir: /srv/http
   default_site: default
   default_site_ssl: default-ssl
+
+MacOS:
+  rootuser: {{ macos_rootuser }}

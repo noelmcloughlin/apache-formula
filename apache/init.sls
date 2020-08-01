@@ -3,6 +3,7 @@
 apache:
   pkg.installed:
     - name: {{ apache.server }}
+    - runas: {{ apache.rootuser }}
   group.present:
     - name: {{ apache.group }}
     - system: True
